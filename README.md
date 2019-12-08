@@ -1,0 +1,1 @@
+# strc_data_sickle_tripadvisor_hotel_review
