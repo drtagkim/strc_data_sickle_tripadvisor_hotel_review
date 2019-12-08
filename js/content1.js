@@ -21,7 +21,7 @@ function write_page_source(data,callback) {
 }
 function run() {
     let element_more=document.querySelector('span[class*="location-review-review-list-parts-ExpandableReview__cta"]');
-    let WAIT_MORE=2000;
+    let WAIT_MORE=1000;
     element_more.click();
     setTimeout(function(){
         write_page_source(document.innerHTML,(link)=>{

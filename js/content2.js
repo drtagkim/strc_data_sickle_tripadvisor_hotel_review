@@ -22,7 +22,7 @@ next 버튼이 아직 있으면 실행하고 없으면 실행을 중지한다.
 function run_continue() {
     let element_more=document.querySelector('span[class*="location-review-review-list-parts-ExpandableReview__cta"]');
     let element_next=document.querySelector('a[class*="nav next primary"]');
-    let WAIT=2000;
+    let WAIT=1000;
     if(element_next != null) {
         setTimeout(function(){
             element_next.click();
