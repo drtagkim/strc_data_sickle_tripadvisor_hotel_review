@@ -1,7 +1,9 @@
 const run=document.querySelector("#run");
 const msg=document.querySelector("#msg");
 //const msg=document.querySelector("#msg");
-
+/*
+기본적으로 실행되어야 할 백그라운드 함수
+*/
 chrome.tabs.query({
     active:true,
     currentWindow:true
