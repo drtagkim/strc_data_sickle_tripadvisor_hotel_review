@@ -2,6 +2,15 @@ const run=document.querySelector("#run");
 const msg=document.querySelector("#msg");
 //const msg=document.querySelector("#msg");
 
+chrome.tabs.query({
+    active:true,
+    currentWindow:true
+},(tabs)=>{
+    chrome.tabs.executeScript({
+        file:'js/my_function.js'
+    });
+});
+
 run.addEventListener('click',()=>{
     chrome.tabs.query({
         active:true,
