@@ -19,7 +19,7 @@ function run() {
     let WAIT_MORE=1000;
     element_more.click();
     setTimeout(function(){
-        write_page_source(document.innerHTML,(link)=>{
+        write_page_source(document.body.innerHTML,(link)=>{
             let file_date=new Date();
             file_date=file_date.toGMTString();
             link.download="tripadvisor_hotel_reivew_("+file_date+").html";
@@ -38,6 +38,7 @@ function run_continue() {
         setTimeout(function(){
             element_more.click();
         },WAIT*2);
+        //issue here.
         setTimeout(function(){
             write_page_source(document.innerHTML,(link)=>{
                 let file_date=new Date();
