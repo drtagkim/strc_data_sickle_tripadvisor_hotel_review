@@ -1,3 +1,11 @@
+const TA_QUERY={
+    more:`span[class*="location-review-review-list-parts-ExpandableReview__cta"]`,
+    next:'a[class*="nav next primary"]',
+    next_no_more:'span[class="ui_button nav next primary disabled"]',
+    current_page_num:'.pageNumbers [class*="current"]',
+    last_page_num:'.pageNumbers [class*="last"]'
+};
+
 function clearMemory(objURL) {
     if (window.__Xr_objURL_forCreatingFile__) {
         window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
@@ -8,45 +16,31 @@ function write_page_source(data,callback) {
     var blob=new Blob([data],{type:'text/plain'}); //텍스트 파일로 설정
     var objURL=window.URL.createObjectURL(blob); //URL을 비운다.
     clearMemory(objURL); //메모리 클리어
-    var a = document.createElement('a');
-    a.href = objURL;
-    callback(a);
-    //a.download="sample_download.html";
-    //a.click();
+    var link = document.createElement('a');
+    link.href = objURL;
+    let file_date=new Date();
+    file_date=file_date.toGMTString();
+    link.download="tripadvisor_hotel_reivew_("+file_date+").html";
+    link.click();
 }
 function run() {
-    let element_more=document.querySelector('span[class*="location-review-review-list-parts-ExpandableReview__cta"]');
+    let element_more=document.querySelector(TA_QUERY.more);
     let WAIT_MORE=1000;
-    element_more.click();
-    setTimeout(function(){
-        write_page_source(document.body.innerHTML,(link)=>{
-            let file_date=new Date();
-            file_date=file_date.toGMTString();
-            link.download="tripadvisor_hotel_reivew_("+file_date+").html";
-            link.click();
-        });
-    },WAIT_MORE);
+    if(element_more!=null)
+        element_more.click();
+    write_page_source(document.body.innerHTML);
 }
 function run_continue() {
-    let element_more=document.querySelector('span[class*="location-review-review-list-parts-ExpandableReview__cta"]');
-    let element_next=document.querySelector('a[class*="nav next primary"]');
+    let element_more=document.querySelector(TA_QUERY.more);
+    let element_next=document.querySelector(TA_QUERY.next);
+    let element_next_no_more=document.querySelector(TA_QUERY.next_no_more);
     let WAIT=1000;
-    if(element_next != null) {
-        setTimeout(function(){
-            element_next.click();
-        },WAIT*1);
-        setTimeout(function(){
+    if(element_next != null && element_next_no_more==null) {
+        element_next.click();
+        if(element_more!=null) {
             element_more.click();
-        },WAIT*2);
-        //issue here.
-        setTimeout(function(){
-            write_page_source(document.innerHTML,(link)=>{
-                let file_date=new Date();
-                file_date=file_date.toGMTString();
-                link.download="tripadvisor_hotel_reivew_("+file_date+").html";
-                link.click();
-            });
-        },WAIT*3);
+        }
+        write_page_source(document.body.innerHTML);
     }
 }
 function get_page_num() {
